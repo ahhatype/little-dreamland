@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#b96e99">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Princess Athena">
+    <title>Princess Athena</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="script.js" defer></script>
+    <script src="world.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <main id="top" class="container">
+        <section class="play-card" id="play-area" aria-labelledby="play-heading" hidden>
+          <div class="play-heading">
+            <h1 id="play-heading">Princess Athena</h1>
+            <span class="season-badge" id="season-label"></span>
+          </div>
+          <div class="play-layout">
+            <div>
+              <div class="play-scene" id="play-scene" aria-label="Your adventure scene">
+                <div class="play-sky-decor" aria-hidden="true"><span>☁</span><span id="sky-light">☀️</span><span>☁</span></div>
+                <div class="landscape" id="landscape">
+                  <div class="castle-art">
+                    <div class="castle-tower tower-left"><span class="castle-roof"></span><span class="castle-window"></span></div>
+                    <div class="castle-main"><span class="castle-flag" aria-hidden="true">♥</span><button class="castle-door" id="castle-door" type="button" aria-label="Enter the castle"><span aria-hidden="true">✦</span></button></div>
+                    <div class="castle-tower tower-right"><span class="castle-roof"></span><span class="castle-window"></span></div>
+                  </div>
+                  <div class="garden-art"><span class="garden-tree"></span><span class="garden-bed"></span><span class="garden-tree"></span></div>
+                  <div class="clouds-art">☁️ 🌈 ☁️</div>
+                  <div class="season-decor" id="season-decor"></div>
+                </div>
+                <div class="play-ground" aria-hidden="true"></div>
+                <div class="moat" aria-hidden="true">
+                  <svg class="moat-bridge" viewBox="0 0 90 55" focusable="false">
+                    <path d="M30 2h30l20 48Q45 57 10 50z" fill="#eed8df" stroke="#cdaebe" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M36 4 22 49M54 4l14 45M18 37q27 5 54 0M24 24q21 4 42 0M28 13q17 3 34 0" fill="none" stroke="#d9bac7" stroke-width="1.5"/>
+                    <path d="M30 4 11 49M60 4l19 45" fill="none" stroke="#f8edf1" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M32 6h26" fill="none" stroke="#f8edf1" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="31" cy="5" r="3" fill="#e5bfd1"/><circle cx="59" cy="5" r="3" fill="#e5bfd1"/>
+                  </svg>
+                </div>
+                <svg class="flower-bed" id="flower-bed" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true"></svg>
+                <div class="characters" id="characters"></div>
+                <div class="weather-layer" id="weather-layer" aria-hidden="true"></div>
+                <div class="world-outdoor" id="world-outdoor">
+                  <div class="garden-plots" id="garden-plots" aria-label="Garden plots"></div>
+                  <button type="button" class="horse" id="horse" aria-label="Horse. Drag or use arrow keys to move."><img src="horse.svg" alt="" draggable="false"></button>
+                  <button type="button" class="monster" id="monster" aria-label="Help the monsters play nicely">👾</button>
+                </div>
+                <div class="room-scene" id="room-scene" hidden>
+                  <div class="room-title" id="room-title"></div>
+                  <div class="castle-map" id="castle-map" hidden aria-label="Castle room map">
+                    <p>✨ Pick a room to explore! ✨</p>
+                    <div class="map-rooms">
+                      <button type="button" data-world="hall"><span aria-hidden="true">🛋️</span>Hall</button>
+                      <button type="button" data-world="kitchen"><span aria-hidden="true">🍳</span>Kitchen</button>
+                      <button type="button" data-world="dining"><span aria-hidden="true">🍽️</span>Dining</button>
+                      <button type="button" data-world="bedroom"><span aria-hidden="true">🛏️</span>Bedroom</button>
+                    </div>
+                  </div>
+                  <div class="room-art" id="room-art" aria-hidden="true"></div>
+                  <div class="room-game" id="room-game" aria-live="polite"></div>
+                  <button type="button" class="room-hero" id="room-hero" aria-label="Your hero. Use arrow keys to move."></button>
+                  <div class="room-furniture" id="room-furniture"></div>
+                </div>
+              </div>
+              <nav class="adventure-controls" aria-label="Adventure controls">
+                <button type="button" class="challenge-open" id="challenge-open" aria-haspopup="dialog" aria-controls="challenge-dialog">💌 <span>Adventure</span></button>
+                <details class="tools-panel" id="tools-panel">
+                  <summary>🧺 <span>Play</span></summary>
+                  <div class="tools-content">
+              <section class="monster-help" id="monster-help" aria-labelledby="monster-heading">
+                <div>
+                  <h3 id="monster-heading">👾 The monsters need a friend!</h3>
+                  <p id="monster-instruction">They’re bumping the castle. Share a sparkle to help them play nicely.</p>
+                </div>
+                <button type="button" data-world="protect">✨ Share a sparkle</button>
+              </section>
+              <div class="garden-tools" id="garden-tools" role="group" aria-label="Garden tools">
+                <span>🌼 Garden:</span>
+                <button type="button" data-garden-tool="dig" aria-pressed="false" aria-label="Shovel: dig a plot or cover a seed"><svg class="garden-tool-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M22 4 10 20" fill="none" stroke="#987255" stroke-width="4" stroke-linecap="round"/><path d="M20 3q4-3 7 0l-3 4-4-1z" fill="#d7a2bc" stroke="#987255"/><path d="M5 18q5-2 9 3l-5 8Q3 28 3 23z" fill="#c0cbd0" stroke="#82959c" stroke-width="1.5"/></svg> Shovel</button>
+                <button type="button" data-garden-tool="seed" aria-pressed="false" aria-label="Seeds: place a seed in a hole"><svg class="seed-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M25 5C16 5 7 11 6 19c-1 6 3 9 8 8C22 26 27 15 25 5Z" fill="#aa7149" stroke="#67472f" stroke-width="2"/><path d="M9 22c3-4 7-8 12-11" fill="none" stroke="#e8c89f" stroke-width="2" stroke-linecap="round"/></svg> Seeds</button>
+                <button type="button" data-garden-tool="water" aria-pressed="false" aria-label="Watering can: water a covered seed or flower"><svg class="garden-tool-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 14h15l-2 12H10z" fill="#96cfdb" stroke="#558e9c" stroke-width="1.5"/><path d="M12 14c-1-8 9-8 8 0M23 17l5-3 1-3" fill="none" stroke="#558e9c" stroke-width="2"/><circle cx="29" cy="8" r="1.5" fill="#7bbbd5"/></svg> Water</button>
+                <span class="garden-hint">Choose a tool, then a plot. Or keep clicking a plot to plant step by step!</span>
+              </div>
+              <div class="world-toolbar" id="world-toolbar">
+                <button type="button" data-world="visit">🌉 <span>Visit castle</span></button>
+                <button type="button" data-world="castle">🏰 <span>Castle map</span></button>
+                <button type="button" data-world="outside">🌳 <span>Outside</span></button>
+                <button type="button" data-world="plant">🌱 <span>Quick plant</span></button>
+                <button type="button" data-world="pet">💗 <span>Pet horse</span></button>
+                <button type="button" data-world="ride">🐎 <span>Ride horse</span></button>
+              </div>
+              <div class="room-menu" id="room-menu" hidden>
+                <span>🗺️ Pick a room:</span>
+                <button type="button" data-world="hall">🛋️ Hall</button>
+                <button type="button" data-world="kitchen">🍳 Kitchen</button>
+                <button type="button" data-world="dining">🍽️ Dining room</button>
+                <button type="button" data-world="bedroom">🛏️ Bedroom</button>
+              </div>
+              <div class="room-actions" id="room-actions" hidden>
+                <button type="button" data-world="chair">🪑 Chair</button>
+                <button type="button" data-world="table">🪵 Table</button>
+                <button type="button" data-world="lamp">💡 Lamp</button>
+                <button type="button" data-world="plant-decor">🪴 Plant</button>
+                <button type="button" data-world="rug">🧶 Rug</button>
+                <button type="button" data-world="cook" id="cook-action">🥣 Cook</button>
+                <button type="button" data-world="dress" id="dress-action">👗 Change dress</button>
+              </div>
+              <div class="scene-controls">
+                <div class="move-controls" role="group" aria-label="Move your hero">
+                  <button type="button" data-move="left" aria-label="Move hero left">←</button>
+                  <button type="button" data-move="up" aria-label="Move hero up">↑</button>
+                  <button type="button" data-move="down" aria-label="Move hero down">↓</button>
+                  <button type="button" data-move="right" aria-label="Move hero right">→</button>
+                </div>
+                <div class="friend-controls" role="group" aria-label="Add a friend">
+                  <span>Add a friend:</span>
+                  <button type="button" data-friend="bunny" aria-label="Add a bunny"><img src="bunny.svg" alt="" draggable="false"></button>
+                  <button type="button" data-friend="unicorn" aria-label="Add a unicorn"><img src="unicorn.svg" alt="" draggable="false"></button>
+                  <button type="button" data-friend="fairy" aria-label="Add a fairy">🧚</button>
+                </div>
+              </div>
+                  <details class="play-help"><summary>❔ How to play</summary><p>Move Athena across the bridge or tap the castle door to go inside. Drag friends and treasures; double-click or double-tap them for a colorful copy.</p></details>
+                  <footer class="site-footer">By Laine <button type="button" id="install-app" hidden>Install app</button><p id="install-help"></p></footer>
+                  </div>
+                </details>
+                <details class="voice-panel">
+                  <summary aria-label="Voice settings for grown-ups">🎙️ <span>Voice</span><span id="voice-summary-state"></span></summary>
+                  <section class="voice-setup" aria-labelledby="voice-heading">
+                    <div class="voice-setup-copy">
+                      <div class="section-kicker">GROWN-UP SETUP</div>
+                      <h3 id="voice-heading">Play together with your voice</h3>
+                      <p>Turn up the sound, click Start voice, then allow the microphone if your browser asks. Wait for the green “Listening” sign before speaking.</p>
+                      <p class="voice-privacy">The microphone listens after each prompt, not continuously. Your browser may send speech to an online service.</p>
+                    </div>
+                    <div class="voice-setup-controls">
+                      <button class="voice-mode-button" type="button" id="voice-mode-button" aria-pressed="false">🎙️ Start voice</button>
+                      <div class="voice-indicator" id="voice-indicator" data-state="off" aria-live="polite">○ Voice is off</div>
+                      <p class="voice-feedback" id="voice-feedback"></p>
+                      <p class="browser-warning" id="browser-warning" hidden>This is the VS Code preview. Voice services may not work here. Open this page in Google Chrome, allow the microphone, and turn up your speakers.</p>
+                    </div>
+                    <details class="voice-examples">
+                      <summary>What can we say?</summary>
+                      <p>When the game is listening, answer its question or say “move right”, “plant a seed”, “open the castle”, “ride the horse”, or “help the castle”.</p>
+                    </details>
+                  </section>
+                </details>
+              </nav>
+              <div class="scene-messages" aria-live="polite">
+                <p class="world-status" id="world-status" role="status"></p>
+                <p class="world-save-status" id="world-save-status" role="status"></p>
+                <p class="friend-message" id="friend-message" role="status"></p>
+                <p id="app-status" role="status"></p>
+              </div>
+            </div>
+            <dialog class="challenge-card" id="challenge-dialog" aria-labelledby="challenge-question">
+              <button type="button" class="challenge-close" id="challenge-close" aria-label="Close adventure">×</button>
+              <div class="challenge-icon" aria-hidden="true">💌</div>
+              <h3 id="challenge-question"></h3>
+              <p>Say an answer or click or tap a picture!</p>
+              <p class="challenge-voice-state" id="challenge-voice-state" role="status" aria-live="polite"></p>
+              <div class="answer-options" id="answer-options"></div>
+              <button class="voice-button" type="button" id="voice-button">🎙️ Say my answer</button>
+              <button class="voice-button" type="button" id="challenge-stop-voice" hidden>■ Stop voice</button>
+              <button class="read-button" type="button" id="read-button">♪ Read to me</button>
+              <p class="challenge-status" id="challenge-status" role="status" aria-live="polite"></p>
+              <button class="next-button" type="button" id="next-button" hidden>Next adventure ✨</button>
+            </dialog>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "Princess Athena",
+  "short_name": "Princess Athena",
+  "description": "Explore Princess Athena's castle, garden and adventures.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff9fc",
+  "theme_color": "#b96e99",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
